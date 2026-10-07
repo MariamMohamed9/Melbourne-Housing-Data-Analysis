@@ -1,22 +1,42 @@
-import streamlit as st
+
+import numpy as np
 import pandas as pd
+import plotly.express as px
+import streamlit as st
 
-st.set_page_config(page_title="Home", layout="wide")
 
-html = """
-<div style="text-align: center; color: white; font-size: 30px; font-weight: bold;">
-    Melbourne House Prices EDA Project
-</div>
-"""
-st.markdown(html, unsafe_allow_html=True)
+st.set_page_config(
+    page_title="Melbourne Housing Dashboard", page_icon="🏠", layout="wide"
+)
 
+html ="""
+    <div style="text-align: center; color: white; font-size: 30px; font-weight: bold;">
+        Melbourne House Prices EDA Project
+    </div>
+    """
+st.markdown(
+    "<h1 style='text-align: center;'>Melbourne House Prices EDA Project</h1>",
+    unsafe_allow_html=True,
+)
+
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.image(
+        "https://images.adsttc.com/media/images/6854/8198/8a40/7a01/8689/6242/newsletter/melbourne-architecture-city-guide-the-architectural-landmarks-that-make-one-of-the-worlds-most-liveable-cities_22.jpg?1750368681",
+        width=600, 
+        caption=None, 
+    )
+
+st.write("---")  
+
+# Load Data
 df = pd.read_parquet("cleaned_data.parquet")
 
-# عرض نموذج من البيانات
-st.subheader("Data Overview")
-st.dataframe(df)
+# Show sample of data
+st.subheader("📋 Data Overview")
+st.dataframe(df.head(10), use_container_width=True)
 
-# وصف الأعمدة
+# Column descriptions
 column_descriptions = {
     "Suburb": "Name of the suburb where the property is located",
     "Address": "Detailed address of the property",
@@ -39,22 +59,19 @@ column_descriptions = {
     "Propertycount": "Number of properties that exist in the suburb",
 }
 
+# Create description table
 description_df = pd.DataFrame(
     [
         {
             "Column": column,
             "Description": column_descriptions.get(
-                column,
-                "Description not available"
-            )
+                column, "Description not available"
+            ),
         }
         for column in df.columns
         if not column.endswith("_id")
     ]
 )
-
 # Display title
 st.subheader("📋 Dataset Column Descriptions")
-
-# Display table
 st.table(description_df)

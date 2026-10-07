@@ -1,0 +1,19 @@
+
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import streamlit as st
+
+st.set_page_config(
+    page_title="Melbourne Housing Dashboard", page_icon="🏠", layout="wide"
+)
+
+html ="""
+    <div style="text-align: center; color: white; font-size: 30px; font-weight: bold;">
+        Melbourne House Prices EDA Project
+    </div>
+    """
+st.markdown(
+    "<h1 style='text-align: center;'>Melbourne House Prices EDA Project</h1>",
+    unsafe_allow_html=True,
+)
