@@ -26,7 +26,18 @@ tab1, tab2 = st.tabs(['Numerical Analysis', 'Categorical Analysis'])
 
 with tab1:
     st.subheader('Numerical Analysis')
+    num_cols = cleaned_df.select_dtypes(include= 'number').columns
+    col_select = st.selectbox('Select Column', num_cols)
+    chart_select = st.radio('Select Chart Type', ['Histogram', 'Box Plot'])
+    if chart_select == 'Histogram':
+      st.plotly_chart(px.histogram(data_frame=cleaned_df, x=col_select, title=f'Histogram of {col_select}'))
+
+    else:
+      st.plotly_chart(px.box(data_frame=cleaned_df, x=col_select, title=f'Box Plot of {col_select}'))
+
+
+
 
 with tab2:
     st.subheader('Categorical Analysis')
-    num_cols = cleaned_df.select_dtypes(include= 'number').columns
+   
